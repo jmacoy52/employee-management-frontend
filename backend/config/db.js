@@ -14,4 +14,14 @@ const db = mysql.createConnection({
 });
 
 
+//Test the connection and log results
+db.connect((err) => {
+  if (err) {
+    console.error('MySQL connection failed:', err.message);
+    process.exit(1); // Stop the server if connection fails
+  } else {
+    console.log('MySQL connected successfully!');
+  }
+});
+
 module.exports = db; // EXPORT the connection so it can be used elsewhere
