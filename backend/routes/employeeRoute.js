@@ -8,7 +8,7 @@ router.get('/employees', EmployeeController.getEmployees);
 // Route to create an employee
 router.post('/employees', EmployeeController.createEmployee);
 
-// Add more routes like PUT (update), DELETE later
+// PUT (update)
 router.put('/employees/:id', EmployeeController.updateEmployee);
 
 //Route to delete employee

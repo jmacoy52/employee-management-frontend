@@ -23,7 +23,6 @@ class EmployeeModel {
     db.query(query, values, callback);
   }
 
-  // (Optional) More methods can be added here like updateEmployee, deleteEmployee etc.
   //Update Employees 
   static updateEmployee = (id, employeeData, callback) => {
     const query = 'UPDATE employees SET FullName = ?, position = ?, department = ?, salary = ? WHERE id = ?';
