@@ -24,3 +24,12 @@ UPDATE employees SET FullName = CONCAT(first_name, ' ', last_name);
 -- 3. Drop the old columns
 ALTER TABLE employees DROP COLUMN first_name;
 ALTER TABLE employees DROP COLUMN last_name;
+
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role VARCHAR(50) DEFAULT 'user',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
