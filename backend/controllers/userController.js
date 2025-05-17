@@ -8,15 +8,16 @@ const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
 class UserController {
   // Register new user
   static async register(req, res) {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !role) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
     // Check if user already exists
     UserModel.findUserByEmail(email, async (err, existingUser) => {
       if (err) return res.status(500).json({ error: 'Server error' });
+      console.log('Checking for email:', email);
       if (existingUser) return res.status(409).json({ error: 'Email already exists' });
 
       const hashedPassword = await bcrypt.hash(password, 10);

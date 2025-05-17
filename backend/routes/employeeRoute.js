@@ -1,7 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const EmployeeController = require('../controllers/employeeController');
+const authenticateToken = require('../middleware/auth.Middleware');
 
+
+//Protect this route
+router.get('/', authenticateToken, EmployeeController.getEmployees);
 // Route to get all employees
 router.get('/employees', EmployeeController.getEmployees);
 
@@ -15,6 +19,6 @@ router.put('/employees/:id', EmployeeController.updateEmployee);
 router.delete('/employees/:id', EmployeeController.deleteEmployee);
 
 //Route to get employee by id
-router.getEmployeeById('/employees/:id', EmployeeController.getEmployeeById);
+router.get('/employees/:id', EmployeeController.getEmployeeById);
 
 module.exports = router;
