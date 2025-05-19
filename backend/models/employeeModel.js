@@ -47,6 +47,24 @@ class EmployeeModel {
       callback(null, results[0]);
     });
   }
+
+   // This function helps you find employee by email (for validation)
+   static findEmployeeByEmail(email) {
+    return new Promise((resolve, reject) => {
+      const query = 'SELECT * FROM employees WHERE email = ?';
+      // Execute the SQL query to check if the email exists
+      db.query(query, [email], (err, results) => {
+        if (err) {
+          
+          return reject(err);  // If there's a DB error, reject the Promise
+        }
+        if (results.length > 0) {  
+          return resolve(results[0]); // If an employee with that email is found, resolve with the employee object
+        }
+        return resolve(null);  // If no employee is found, resolve with null
+      });
+    });
+  }
 }
 
 module.exports = EmployeeModel;
