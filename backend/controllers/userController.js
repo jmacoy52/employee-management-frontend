@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
+const db= require('../config/db');
+
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
@@ -48,6 +50,13 @@ class UserController {
       });
 
       res.status(200).json({ message: 'Login successful', token });
+    });
+  }
+
+  static async getAllUsers(req, res) {
+    db.query('SELECT id, username, email, role FROM users', (err, results) => {
+      if (err) return res.status(500).json({ error: 'Server error' });
+      res.json(results);
     });
   }
 }

@@ -1,24 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const EmployeeController = require('../controllers/employeeController');
-const authenticateToken = require('../middleware/auth.Middleware');
+const { authenticateToken } = require('../middleware/authMiddleware');
 
+// Route to get all employees (protected)
+router.get('/employees', authenticateToken, EmployeeController.getEmployees);
 
-//Protect this route
-router.get('/', authenticateToken, EmployeeController.getEmployees);
-// Route to get all employees
-router.get('/employees', EmployeeController.getEmployees);
+// Route to get a specific employee by ID (protected)
+router.get('/employees/:id', authenticateToken, EmployeeController.getEmployeeById);
 
-// Route to create an employee
-router.post('/employees', EmployeeController.createEmployee);
+// Route to create an employee (protected)
+router.post('/employees', authenticateToken, EmployeeController.createEmployee);
 
-// PUT (update)
-router.put('/employees/:id', EmployeeController.updateEmployee);
+// Route to update an employee (protected)
+router.put('/employees/:id', authenticateToken, EmployeeController.updateEmployee);
 
-//Route to delete employee
-router.delete('/employees/:id', EmployeeController.deleteEmployee);
-
-//Route to get employee by id
-router.get('/employees/:id', EmployeeController.getEmployeeById);
+// Route to delete an employee (protected)
+router.delete('/employees/:id', authenticateToken, EmployeeController.deleteEmployee);
 
 module.exports = router;
