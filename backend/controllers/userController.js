@@ -1,8 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
-const db= require('../config/db');
-
+const db = require('../config/db');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
@@ -16,20 +15,25 @@ class UserController {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
-    // Check if user already exists
-    UserModel.findUserByEmail(email, async (err, existingUser) => {
-      if (err) return res.status(500).json({ error: 'Server error' });
+    try {
+      // Check if user already exists
+      const existingUser = await UserModel.findUserByEmail(email);
       console.log('Checking for email:', email);
       if (existingUser) return res.status(409).json({ error: 'Email already exists' });
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const newUser = { username, email, password: hashedPassword };
+      const newUser = { username, email, password: hashedPassword, role };
+
       UserModel.registerUser(newUser, (err, result) => {
         if (err) return res.status(500).json({ error: 'Failed to register user' });
         res.status(201).json({ message: 'User registered successfully', userId: result.insertId });
       });
-    });
+
+    } catch (err) {
+      console.error('Error during registration:', err);
+      return res.status(500).json({ error: 'Server error' });
+    }
   }
 
   // Login user
@@ -38,8 +42,8 @@ class UserController {
 
     if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
 
-    UserModel.findUserByEmail(email, async (err, user) => {
-      if (err) return res.status(500).json({ error: 'Server error' });
+    try {
+      const user = await UserModel.findUserByEmail(email);
       if (!user) return res.status(401).json({ error: 'Invalid credentials' });
 
       const passwordMatch = await bcrypt.compare(password, user.password);
@@ -50,7 +54,11 @@ class UserController {
       });
 
       res.status(200).json({ message: 'Login successful', token });
-    });
+
+    } catch (err) {
+      console.error('Login error:', err);
+      return res.status(500).json({ error: 'Server error' });
+    }
   }
 
   static async getAllUsers(req, res) {
