@@ -36,7 +36,7 @@ The backend will be integrated with a frontend application later.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/employee-management-backend.git
+git clone https://github.com/jmacoy52/employee-management-backend.git
 cd employee-management-backend
 
 2. Install Dependencies
