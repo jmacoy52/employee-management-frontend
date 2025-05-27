@@ -1,3 +1,61 @@
-.header{
-    color: aliceblue;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 3px;
+  height: 64px; /* Reduced height */
+  background-color: #4779ee; /* Blue */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+   border-radius: 10px;
+ 
 }
+
+.logo {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  color: white;
+  gap: 24px; /* Space between logo and nav buttons */
+}
+
+.navbar {
+  display: flex;
+  gap: 16px; /* Adds space between Help and Sign In */
+  
+}
+
+.navbar a {
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  background-color:rgb(245, 132, 119);
+  transition: background-color 0.3s ease;
+}
+
+.navbar a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 16px;
+  }
+
+  .navbar {
+    margin-top: 10px;
+  }
+}
+
