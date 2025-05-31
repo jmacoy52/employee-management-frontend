@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../Header";  
 import "./Home.css";
 import Footer from "../Footer";
+import { Link } from "react-router-dom";
 
 // This Home component serves as the landing page for the application.
 const Home = () => {
@@ -12,8 +13,8 @@ const Home = () => {
         <h1>Welcome to EmploCore</h1> 
         <p>Streamline your workforce with precision control and effortless management</p>
         <div className="cta-buttons">
-          <a href="/login" className="btn-login">Login</a>
-          <a href="/register" className="btn-register">Register</a>
+          <Link to="/login" className="btn-login">Login</Link>
+          <Link to="/register" className="btn-register">Register</Link>
         </div>
       </div>
       <Footer />
