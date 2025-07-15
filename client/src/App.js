@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Pages/Home";
 import Login from "./components/Pages/Auth/Login";
 import Register from "./components/Pages/Auth/Register";
+import HRDashboard from "./components/Pages/Dashboards/HRDashboard/HRDashboard"; // Adjust path if needed
+
 
 
 import './App.css';
@@ -15,6 +17,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/HRDashboard" element={<HRDashboard />} />
+      {/*<Route path="/admin-dashboard" element={<AdminDashboard />} />
+<Route path="/employee-dashboard" element={<EmployeeDashboard />} />*/}
+
         {/* Add more routes here like register, dashboard, etc. */}
       </Routes>
       

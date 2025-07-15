@@ -1,0 +1,34 @@
+.hr-dashboard {
+  padding: 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.hr-dashboard h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #2563eb;
+}
+
+.employee-list {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.employee-list h3 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.employee-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.employee-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
