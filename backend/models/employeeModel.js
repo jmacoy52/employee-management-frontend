@@ -12,7 +12,7 @@ class EmployeeModel {
 
   // Insert a new employee
   static insertEmployee(employeeData, callback) {
-    const query = 'INSERT INTO employees (FullName, position, Department, Email, Salary) VALUES (?, ?, ?, ?, ?)';
+    const query = 'INSERT INTO employees (FullName, position, Department, Email, salary) VALUES (?, ?, ?, ?, ?)';
     const values = [
       employeeData.FullName,
       employeeData.position,

@@ -3,7 +3,7 @@ const db = require('../config/db');
 class UserModel {
   static registerUser(userData, callback) {
     const query = 'INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)';
-    const values = [userData.username, userData.email, userData.password, userData.role || 'user'];
+    const values = [userData.username, userData.email, userData.password, userData.role || 'Admin', 'HR'];
     db.query(query, values, callback);
   }
 

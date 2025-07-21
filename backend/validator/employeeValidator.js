@@ -4,7 +4,7 @@ const { checkSchema } = require('express-validator');
 const EmployeeModel = require('../models/employeeModel');
 
 const employeeValidationSchema = {
-  name: {
+  FullName: {
     notEmpty: {
       errorMessage: 'Employee name is required',
     },

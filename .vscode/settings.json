@@ -9,7 +9,7 @@
             "server": "localhost",
             "port": 3306,
             "driver": "MySQL",
-            "name": "localhost",
+            "name": "ems_local",
             "database": "employee_db",
             "username": "root",
             "password": "root"

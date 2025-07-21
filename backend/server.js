@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 // Use the route
-app.use('/api/', employeeRoutes);
+app.use('/api', employeeRoutes);
 app.use('/api/users', userRoutes);
 
 // Home test route
