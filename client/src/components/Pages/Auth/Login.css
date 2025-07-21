@@ -1,0 +1,26 @@
+/* Login.css */
+.auth-container {
+  max-width: 400px;
+  width: 90%; /* Prevents container from touching viewport edges */
+  margin: 2rem auto;
+  padding: 2.5rem; 
+  box-sizing: border-box;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px rgba(197, 47, 47, 0.08);
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; 
+}
+
+.auth-container input {
+  width: 100%;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  border: 2px solid #e7eef7;
+  border-radius: 8px;
+  font-size: 1rem;
+}
