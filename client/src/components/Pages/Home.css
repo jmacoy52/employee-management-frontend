@@ -1,112 +1,104 @@
 .home {
+  background: #f9fbfe;
+  color: #2c3e50;
+  font-family: "Segoe UI", sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: #f4f6f9;
-  padding-top: 30px;
-  padding-left: 40px;
-  padding-right: 40px;
-  box-sizing: border-box;
 }
 
-.home-content {
-  text-align: center;
-  margin-top: 50px;
-}
-
-.home-content h1 {
-  font-size: 3.5rem; /* laptop size */
-  color: #1c1c1c;
-  margin-bottom: 20px;
-}
-
-.home-content p {
-  font-size: 1.2rem;
-  color: #555;
-  max-width: 700px;
-  margin: auto;
-}
-
-.cta-buttons {
-  margin-top: 30px;
+.hero {
+  flex: 1;
+  padding: 4rem 1rem;
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
   justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #eaf4ff, #ffffff);
 }
 
-.cta-buttons a {
-  padding: 14px 32px;
-  border-radius: 8px;
-  font-weight: 600;
-  text-decoration: none;
-  color: #fff;
-  transition: 0.3s ease-in-out;
+.hero-inner {
+  max-width: 960px;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.highlight {
+  color: #0066cc;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2.5rem;
+  color: #555;
+}
+
+.features {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.feature-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  background-color: #f0f8ff;
+  transform: translateY(-5px);
+}
+
+.feature-card span {
+  margin-top: 0.5rem;
+  font-weight: 500;
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.btn {
+  padding: 0.8rem 1.5rem;
+  border-radius: 30px;
   font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
-.btn-login {
-  background-color: #2563eb;
+.primary {
+  background-color: #0066cc;
+  color: white;
 }
 
-.btn-login:hover {
-  background-color: #1e40af;
+.primary:hover {
+  background-color: #004f99;
 }
 
-.btn-register {
-  background-color: #10b981;
+.outline {
+  border: 2px solid #0066cc;
+  color: #0066cc;
+  background: transparent;
 }
 
-.btn-register:hover {
-  background-color: #047857;
-}
-
-/* Medium screens: tablets (768px–1024px) */
-@media (max-width: 1024px) {
-  .home-content h1 {
-    font-size: 2.5rem;
-  }
-
-  .home-content p {
-    font-size: 1rem;
-  }
-
-  .cta-buttons a {
-    padding: 12px 24px;
-    font-size: 0.95rem;
-  }
-}
-
-/* Small devices: phones (481px–767px) */
-@media (max-width: 767px) {
-  .home-content h1 {
-    font-size: 2rem;
-  }
-
-  .home-content p {
-    font-size: 0.95rem;
-  }
-
-  .cta-buttons {
-    flex-direction: column;
-  }
-
-  .cta-buttons a {
-    width: 100%;
-    text-align: center;
-    padding: 12px 20px;
-  }
-}
-
-/* Extra small devices: iPhones, Androids (<480px) */
-@media (max-width: 480px) {
-  .home-content h1 {
-    font-size: 1.7rem;
-  }
-
-  .cta-buttons a {
-    padding: 10px 18px;
-    font-size: 0.9rem;
-  }
+.outline:hover {
+  background-color: #0066cc;
+  color: white;
 }

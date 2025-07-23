@@ -70,7 +70,7 @@ const Register = () => {
         <input 
           type="text" 
           name="role" 
-          placeholder="HR or Admin" 
+          placeholder="HR or Admin ?" 
           value={formData.role} 
           onChange={handleChange} 
           required 
