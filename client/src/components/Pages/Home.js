@@ -1,29 +1,50 @@
 import React from "react";
-import Header from "../Header";  
-import "./Home.css";
+import Header from "../Header";
 import Footer from "../Footer";
 import { Link } from "react-router-dom";
+import { Users, ShieldCheck, LayoutDashboard } from "lucide-react";
+import "./Home.css";
 
-// This Home component serves as the landing page for the application.
 const Home = () => {
   return (
     <div className="home">
       <Header />
-      <div className="home-content">
-        <h1>Welcome to EmploCore</h1> 
-        <p>Streamline your workforce with precision control and effortless management</p>
-        <div className="cta-buttons">
-          <Link to="/login" className="btn-login">Login</Link>
-          <Link to="/register" className="btn-register">Register</Link>
+
+      {/* HERO SECTION */}
+      <section className="hero">
+        <div className="hero-inner">
+          <h1 className="hero-title">
+            Welcome to <span className="highlight">EmploCore</span>
+          </h1>
+          <p className="hero-subtitle">
+            Streamline your employee management with role-based access, secure data, and insightful dashboards.
+          </p>
+
+          <div className="features">
+            <div className="feature-card">
+              <Users size={40} />
+              <span>Manage Staff</span>
+            </div>
+            <div className="feature-card">
+              <ShieldCheck size={40} />
+              <span>Secure Roles</span>
+            </div>
+            <div className="feature-card">
+              <LayoutDashboard size={40} />
+              <span>Clean Dashboard</span>
+            </div>
+          </div>
+
+          <div className="cta">
+            <Link to="/login" className="btn primary">Login</Link>
+            <Link to="/register" className="btn outline">Register</Link>
+          </div>
         </div>
-      </div>
+      </section>
+
       <Footer />
     </div>
-      
   );
 };
 
 export default Home;
-
-// This Home component serves as the landing page for the application.
-// It includes a header and a welcome message with call-to-action buttons for login and registration.

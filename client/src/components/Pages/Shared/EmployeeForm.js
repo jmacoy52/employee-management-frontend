@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './EmployeeForm.css';
+import '../Shared/Employee.css';
 
 const EmployeeForm = ({ employee, onSubmit, onCancel }) => {
   const [formData, setFormData] = useState({

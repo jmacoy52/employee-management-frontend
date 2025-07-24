@@ -32,8 +32,8 @@ const Login = () => {
       const { role } = jwtDecode(token);
 
       // redirect based on role
-      if (role === "admin") {
-        navigate("/admin-dashboard");
+      if (role === "Admin") {
+        navigate("/AdminDahsboard");
       } else if (role === "user") {
         navigate("/HRDashboard");
       } else {
