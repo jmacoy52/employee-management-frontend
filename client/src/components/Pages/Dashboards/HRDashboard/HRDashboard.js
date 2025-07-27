@@ -1,184 +1,99 @@
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import EmployeeForm from "../../Shared/EmployeeForm";
+import EmployeeList from "../../Shared/EmployeeList";
+import EmployeeStats from "../../Shared/EmployeeStats";
+import EditEmployeeModal from "../../Shared/EditEmployeeModal";
+import { PlusCircle } from "lucide-react";
 import "./HRDashboard.css";
+import "../../Shared/EmployeeForm.css";
+import toast from "react-hot-toast";
 
 const HRDashboard = () => {
-  // State to hold employee list
   const [employees, setEmployees] = useState([]);
-
-  // State for error messages
   const [error, setError] = useState("");
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [editingEmployee, setEditingEmployee] = useState(null);
 
-  // Toggle form visibility
-  const [showForm, setShowForm] = useState(false);
+  const token = localStorage.getItem("token");
 
-  // Form data for creating a new employee
-  const [newEmp, setNewEmp] = useState({
-    FullName: "",
-    email: "",
-    position: "",
-    Department: "",
-    salary: "",
-  });
-
-  // Fetch all employees from backend
   const fetchEmployees = async () => {
     try {
-      const token = localStorage.getItem("token");
       const res = await axios.get("http://localhost:5000/api/employees", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setEmployees(res.data); // update employee list
+      setEmployees(res.data);
     } catch (err) {
       console.error("Error fetching employees:", err);
-      setError("Failed to load employees.");
+      toast.setError("Failed to load employees.");
     }
   };
 
-  // Fetch employees once on page load
   useEffect(() => {
     fetchEmployees();
   }, []);
 
-  // Update form state on input change
-  const handleChange = (e) => {
-    setNewEmp({
-      ...newEmp,
-      [e.target.name]: e.target.value,
-    });
+  const handleEmployeeCreated = () => {
+    fetchEmployees();
+    setShowCreateForm(false);
   };
 
-  // Create new employee
-  const handleCreate = async (e) => {
-    e.preventDefault();
-    setError("");
+  const handleEdit = (employee) => {
+    setEditingEmployee(employee);
+    setEditOpen(true);
+  };
 
-    // Ensure salary is converted to a number
-    const employeeToSend = {
-      ...newEmp,
-      salary: Number(newEmp.salary),
-    };
-
-    console.log("Sending new employee:", employeeToSend);
-
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this employee?")) return;
     try {
-      const token = localStorage.getItem("token");
-
-      await axios.post(
-        "http://localhost:5000/api/employees",
-        employeeToSend,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      // Clear form and hide it
-      setNewEmp({
-        FullName: "",
-        email: "",
-        position: "",
-        Department: "",
-        salary: "",
+      await axios.delete(`http://localhost:5000/api/employees/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      setShowForm(false);
 
-      // Refresh employee list
+      toast.success("Employee deleted successfully!");
+      // Refresh employee list after deletion
       fetchEmployees();
     } catch (err) {
-      console.error("Error creating employee:", err);
-      const backendMsg = err.response?.data?.errors?.[0]?.msg;
-      setError(backendMsg || "Failed to create employee.");
+      console.error("Failed to delete employee:", err);
+      toast.setError("Delete failed.");
     }
   };
 
   return (
     <div className="hr-dashboard">
-      <h2>Welcome, HR</h2>
+      <div className="header">
+        <h2>Welcome, HR</h2>
+        <button
+          className="btn-create"
+          onClick={() => setShowCreateForm((p) => !p)}
+        >
+          <PlusCircle size={20} style={{ marginRight: "5px" }} />
+          {showCreateForm ? "Cancel" : "Create Employee"}
+        </button>
+      </div>
 
-      {/* Error display */}
       {error && <p className="error">{error}</p>}
 
-      {/* Toggle create form */}
-      <button className="btn-create" onClick={() => setShowForm(!showForm)}>
-        {showForm ? "Cancel" : "Create Employee"}
-      </button>
-
-      {/* ---------- Create New Employee Form ---------- */}
-      {showForm && (
-        <form className="create-form" onSubmit={handleCreate}>
-          <input
-            type="text"
-            name="FullName"
-            placeholder="Full Name"
-            value={newEmp.FullName}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={newEmp.email}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="position"
-            placeholder="Position"
-            value={newEmp.position}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="text"
-            name="Department"
-            placeholder="Department"
-            value={newEmp.Department}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="number"
-            name="salary"
-            placeholder="salary"
-            value={newEmp.salary}
-            onChange={handleChange}
-            required
-          />
-          <button type="submit">Create Employee</button>
-        </form>
+      {showCreateForm && (
+        <EmployeeForm onSuccess={handleEmployeeCreated} />
       )}
 
-      {/* ---------- Employee List ---------- */}
-      <table className="employee-table">
-        <thead>
-          <tr>
-            <th>Full Name</th>
-            <th>Email</th>
-            <th>Position</th>
-            <th>Department</th>
-            <th>Salary</th>
-          </tr>
-        </thead>
-        <tbody>
-          {employees.length > 0 ? (
-            employees.map((emp) => (
-              <tr key={emp._id}>
-                <td>{emp.FullName}</td>
-                <td>{emp.email}</td>
-                <td>{emp.position}</td>
-                <td>{emp.Department}</td>
-                <td>${emp.salary}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5">No employees found.</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <EmployeeList
+        employees={employees}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
+
+      <EmployeeStats employees={employees} />
+
+      <EditEmployeeModal
+        open={editOpen}
+        onClose={() => setEditOpen(false)}
+        employee={editingEmployee}
+        onUpdated={fetchEmployees}
+      />
     </div>
   );
 };

@@ -1,94 +1,97 @@
-import React, { useState, useEffect } from 'react';
-import './EmployeeForm.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../Shared/EmployeeForm.css";
+import toast from "react-hot-toast";
 
-const EmployeeForm = ({ employee, onSubmit, onCancel }) => {
+const EmployeeForm = ({ onSuccess }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    department: '',
-    position: ''
+    FullName: "",
+    email: "",
+    position: "",
+    Department: "",
+    salary: "",
   });
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    if (employee) {
-      setFormData({
-        name: employee.name,
-        email: employee.email,
-        department: employee.department,
-        position: employee.position
-      });
-    }
-  }, [employee]);
+
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    setError("");
+
+    const payload = {
+      ...formData,
+      salary: Number(formData.salary),
+    };
+
+    try {
+      const token = localStorage.getItem("token");
+     
+        await axios.post("http://localhost:5000/api/employees", payload, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+      toast.success("Employee created successfully!");
+
+      onSuccess();
+    } catch (err) {
+      const msg = err.response?.data?.errors?.[0]?.msg;
+      setError(msg || "Failed to save employee.");
+    }
   };
 
   return (
-    <div className="form-modal">
-      <div className="form-content">
-        <h3>{employee ? 'Edit Employee' : 'Add Employee'}</h3>
-        <form onSubmit={handleSubmit}>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </label>
+    <form className="create-form" onSubmit={handleSubmit}>
+      {error && <p className="error">{error}</p>}
 
-          <label>
-            Email:
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </label>
-
-          <label>
-            Department:
-            <select
-              name="department"
-              value={formData.department}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Select Department</option>
-              <option value="HR">HR</option>
-              <option value="Engineering">Engineering</option>
-              <option value="Marketing">Marketing</option>
-            </select>
-          </label>
-
-          <label>
-            Position:
-            <input
-              type="text"
-              name="position"
-              value={formData.position}
-              onChange={handleChange}
-              required
-            />
-          </label>
-
-          <div className="form-actions">
-            <button type="submit">Save</button>
-            <button type="button" onClick={onCancel}>Cancel</button>
-          </div>
-        </form>
-      </div>
-    </div>
+      <input
+        type="text"
+        name="FullName"
+        placeholder="Full Name"
+        value={formData.FullName}
+        onChange={handleChange}
+        required
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="Email"
+        value={formData.email}
+        onChange={handleChange}
+        required
+      />
+      <input
+        type="text"
+        name="position"
+        placeholder="Position"
+        value={formData.position}
+        onChange={handleChange}
+        required
+      />
+      <input
+        type="text"
+        name="Department"
+        placeholder="Department"
+        value={formData.Department}
+        onChange={handleChange}
+        required
+      />
+      <input
+        type="number"
+        name="salary"
+        placeholder="Salary"
+        value={formData.salary}
+        onChange={handleChange}
+        required
+      />
+      <button type="submit">{"Create"} Employee</button>
+    </form>
   );
 };
 

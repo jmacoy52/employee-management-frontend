@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Pages/Home";
@@ -12,7 +13,7 @@ import './App.css';
 function App() {
   return (
     <Router>
-      
+      <Toaster position="top-right" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
