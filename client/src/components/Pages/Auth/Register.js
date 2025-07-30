@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast"; // Import toast for notifications
 import "./Register.css";
 
 const Register = () => {
@@ -30,7 +31,7 @@ const Register = () => {
       const response = await axios.post("http://localhost:5000/api/users/register", formData);
       
       if (response.status === 201) {
-        alert("Registration successful!");
+        toast.success("Registration successful!");
         navigate("/login"); // redirect to login
       }
     } catch (err) {
@@ -70,7 +71,7 @@ const Register = () => {
         <input 
           type="text" 
           name="role" 
-          placeholder="HR or Admin ?" 
+          placeholder="hr or admin ?" 
           value={formData.role} 
           onChange={handleChange} 
           required 
