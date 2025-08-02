@@ -9,8 +9,11 @@ import AdminDashboard from "./components/Pages/Dashboards/AdminDashboard/AdminDa
 import PrivateRoute from "./components/Pages/Auth/PrivateRoute";
 
 import UserList from "./components/Pages/Dashboards/AdminDashboard/UserList";
+import UserManagement from "./components/Pages/Dashboards/AdminDashboard/UserManagement"; // Adjust path if needed
+
 
 import './App.css';
+
 
 function App() {
   return (
@@ -22,9 +25,8 @@ function App() {
       {/* Sidebar or Header here */}
       
         {/* Other admin routes */}
-        
-      
-    
+        <Route path="/admin/users" element={<UserList />} />
+
 
       {/* Private Routes */}
       <Route element={<PrivateRoute allowedRoles={["admin", "hr", "employee"]} />}>
@@ -33,12 +35,14 @@ function App() {
       </Route>
 
 
+
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/HRDashboard" element={<HRDashboard />} />
         <Route path="/AdminDashboard" element={<AdminDashboard />}  />
         <Route path="/admin/users" element={<UserList />} />
+        <Route path="/admin/usermanagement" element={<UserManagement />} />
       {/*<Route path="/admin-dashboard" element={<AdminDashboard />} />
 <Route path="/employee-dashboard" element={<EmployeeDashboard />} />*/}
 
