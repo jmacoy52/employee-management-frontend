@@ -23,4 +23,11 @@ router.get('/all', authenticateToken, authorizeAdmin, UserController.getAllUsers
 // Route to login a user
 router.post('/login', UserController.login);
 
+// Route to update user role (protected)
+router.put('/:id/role', authenticateToken, UserController.updateUserRole);
+
+// Route to delete a user (protected)
+
+router.delete('/:id', authenticateToken, authorizeAdmin, UserController.deleteUser);
+
 module.exports = router;

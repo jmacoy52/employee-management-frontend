@@ -1,6 +1,6 @@
 const { checkSchema } = require("express-validator");
 
-// Import your UserModel to perform DB checks like email uniqueness
+// Import  UserModel to perform DB checks like email uniqueness
 const UserModel = require("../models/userModel");
 
 const userValidationSchema = {
@@ -39,10 +39,10 @@ const userValidationSchema = {
     },
   
     role: {
-      optional: true, // Make it optional so users default to 'user'
+      optional: true, // Make it optional so users default to 'hr'
       isIn: {
-        options: [['user', 'admin']], // Only allow 'user' or 'admin'
-        errorMessage: 'Invalid role. Must be either user or admin',
+        options: [['hr', 'admin']], // Only allow 'hr' or 'admin'
+        errorMessage: 'Invalid role. Must be either hr or admin',
       }
     }
   };
