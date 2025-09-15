@@ -19,6 +19,7 @@ router.post('/register', userValidation, handleValidation, UserController.regist
 
 // Route to get all users (Admin only)
 router.get('/all', authenticateToken, authorizeAdmin, UserController.getAllUsers);
+router.delete('/:id', authenticateToken, authorizeAdmin, UserController.deleteUser);
 
 // Route to login a user
 router.post('/login', UserController.login);

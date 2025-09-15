@@ -7,6 +7,13 @@ class UserModel {
     db.query(query, values, callback);
   }
 
+   // Delete employee by ID
+    static deleteUser(id, callback) {
+      const query = 'DELETE FROM users WHERE id = ?';
+      db.query(query, [id], callback);
+    }
+
+
  // Inside the UserModel class
 static findUserByEmail(email) {
   return new Promise((resolve, reject) => {

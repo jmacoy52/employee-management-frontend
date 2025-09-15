@@ -2,6 +2,10 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
 const db = require('../config/db');
+const AuditLogModel = require('../models/AuditLogModel'); // Import the AuditLogModel
+
+// Load environment variables
+require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
@@ -27,6 +31,16 @@ class UserController {
 
       UserModel.registerUser(newUser, (err, result) => {
         if (err) return res.status(500).json({ error: 'Failed to register user' });
+
+        // Log this action
+        AuditLogModel.insertLog({
+          UserId: result.insertId,
+          actions: 'REGISTER',
+          descriptions: `User ${username} registered with role ${role}`
+        }, (logErr) => {
+          if (logErr) console.error('Failed to insert audit log:', logErr);
+        });
+
         res.status(201).json({ message: 'User registered successfully', userId: result.insertId });
       });
 
@@ -35,6 +49,34 @@ class UserController {
       return res.status(500).json({ error: 'Server error' });
     }
   }
+
+  // Delete employee
+  static deleteUser(req, res) {
+    const userId = req.params.id;
+
+    UserModel.deleteUser(userId, (err, result) => {
+      if (err) {
+        console.error('Error deleting user:', err);
+        return res.status(500).json({ error: 'Failed to delete user' });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: 'user not found' });
+      }
+
+      // Log this action
+      AuditLogModel.insertLog({
+        UserId: req.user.id,
+        actions: 'DELETE_USER',
+        descriptions: `User ${userId} deleted by ${req.user.email}`
+      }, (logErr) => {
+        if (logErr) console.error('Failed to insert audit log:', logErr);
+      });
+
+      res.status(200).json({ message: 'user deleted successfully' });
+    });
+  }
+
 
   // Login user
   static async login(req, res) {
@@ -53,6 +95,15 @@ class UserController {
         expiresIn: JWT_EXPIRES_IN,
       });
 
+      // Log this action
+      AuditLogModel.insertLog({
+        UserId: user.id,
+        actions: 'LOGIN',
+        descriptions: `User ${user.username} logged in`
+      }, (logErr) => {
+        if (logErr) console.error('Failed to insert audit log:', logErr);
+      });
+
       res.status(200).json({ message: 'Login successful', token });
 
     } catch (err) {
@@ -60,10 +111,20 @@ class UserController {
       return res.status(500).json({ error: 'Server error' });
     }
   }
-
+0
   static async getAllUsers(req, res) {
     db.query('SELECT id, username, email, role FROM users', (err, results) => {
       if (err) return res.status(500).json({ error: 'Server error' });
+
+      //  Log this action
+      AuditLogModel.insertLog({
+        UserId: req.user.id,
+        actions: 'VIEW_USERS',
+        descriptions: `Admin ${req.user.email} fetched all users`
+      }, (logErr) => {
+        if (logErr) console.error('Failed to insert audit log:', logErr);
+      });
+
       res.json(results);
     });
   }
