@@ -10,6 +10,7 @@ import PrivateRoute from "./components/Pages/Auth/PrivateRoute";
 
 import UserList from "./components/Pages/Dashboards/AdminDashboard/UserList";
 import UserManagement from "./components/Pages/Dashboards/AdminDashboard/UserManagement"; // Adjust path if needed
+import AuditLog from "./components/Pages/Dashboards/AdminDashboard/AuditLog";
 
 
 import './App.css';
@@ -43,6 +44,7 @@ function App() {
         <Route path="/AdminDashboard" element={<AdminDashboard />}  />
         <Route path="/admin/users" element={<UserList />} />
         <Route path="/admin/usermanagement" element={<UserManagement />} />
+        <Route path="/admin/auditlog" element={<AuditLog />} />
       {/*<Route path="/admin-dashboard" element={<AdminDashboard />} />
 <Route path="/employee-dashboard" element={<EmployeeDashboard />} />*/}
 
