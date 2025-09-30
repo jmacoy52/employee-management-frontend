@@ -48,19 +48,7 @@ npm install
 
 ### 3. Configure Environment Variables
 
-Create a `.env` file in the root directory and add the following:
-
-```
-PORT=5000
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_mysql_password
-DB_NAME=employee_db
-JWT_SECRET=your_secret_key
-JWT_EXPIRES_IN=1d
-```
-
-💡 Update `DB_*` values to match your MySQL configuration.
+Create a `.env` file in the root directory with the necessary environment variables for database connection, JWT secret, and port configuration. Refer to the code for the required variables.
 
 ### 4. Set Up the Database
 
@@ -82,21 +70,8 @@ The API will be running on your configured port.
 
 ---
 
-## 🧪 API Testing
-
-Use Postman or any REST client to test endpoints like:
-
-- `POST /api/users/register` – Register a new user
-- `POST /api/users/login` – Login user
-- `GET /api/employees` – Get employee list
-- `POST /api/employees` – Create new employee
-- `PUT /api/employees/:id` – Update employee
-- `DELETE /api/employees/:id` – Delete employee
-
----
-
 ## 📌 Notes
 
-- This is a backend-only project.
-- The frontend will be built and connected separately.
-- Ensure CORS is configured if testing with a frontend client.
+- This is a full-stack project with both backend and frontend components.
+- The frontend is built with React and is located in the `client` directory.
+- Ensure CORS is configured for frontend-backend communication.
