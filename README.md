@@ -38,16 +38,19 @@ The backend will be integrated with a frontend application later.
 ```bash
 git clone https://github.com/jmacoy52/Employee-Management-System.git
 cd employee-management-backend
+```
 
-2. Install Dependencies
+### 2. Install Dependencies
+
+```bash
 npm install
+```
 
-3. Configure Environment Variables
-Create a .env file in the root directory and add the following:
+### 3. Configure Environment Variables
 
-env
-Copy
-Edit
+Create a `.env` file in the root directory and add the following:
+
+```
 PORT=5000
 DB_HOST=localhost
 DB_USER=root
@@ -55,38 +58,45 @@ DB_PASSWORD=your_mysql_password
 DB_NAME=employee_db
 JWT_SECRET=your_secret_key
 JWT_EXPIRES_IN=1d
-💡 Update DB_* values to match your MySQL configuration.
+```
 
-4. Set Up the Database
+💡 Update `DB_*` values to match your MySQL configuration.
+
+### 4. Set Up the Database
+
 Open MySQL and create the database manually:
 
-
+```sql
 CREATE DATABASE employee_db;
+```
+
 Run your migration script or use Sequelize/Knex if set up (if applicable).
 
-5. Start the Server
+### 5. Start the Server
 
+```bash
 npm run dev
-The API will be running on http://localhost:5000.
+```
 
-🧪 API Testing
+The API will be running on your configured port.
+
+---
+
+## 🧪 API Testing
+
 Use Postman or any REST client to test endpoints like:
 
-POST /api/users/register – Register a new user
+- `POST /api/users/register` – Register a new user
+- `POST /api/users/login` – Login user
+- `GET /api/employees` – Get employee list
+- `POST /api/employees` – Create new employee
+- `PUT /api/employees/:id` – Update employee
+- `DELETE /api/employees/:id` – Delete employee
 
-POST /api/users/login – Login user
+---
 
-GET /api/employees – Get employee list
+## 📌 Notes
 
-POST /api/employees – Create new employee
-
-PUT /api/employees/:id – Update employee
-
-DELETE /api/employees/:id – Delete employee
-
-📌 Notes
-This is a backend-only project.
-
-The frontend will be built and connected separately.
-
-Ensure CORS is configured if testing with a frontend client.
+- This is a backend-only project.
+- The frontend will be built and connected separately.
+- Ensure CORS is configured if testing with a frontend client.
