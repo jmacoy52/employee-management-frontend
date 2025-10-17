@@ -6,7 +6,7 @@ const AuditLogController = require('../controllers/auditLogController');
 const { authenticateToken, authorizeAdmin } = require('../middleware/authMiddleware');
 
 // defined routes Only admins can view audit logs
-router.get('/all', authenticateToken, authorizeAdmin, AuditLogController.getAllAuditLogs);
+router.get('/', authenticateToken, authorizeAdmin, AuditLogController.getAllAuditLogs);
 
 
 // Not for public use — for testing only
