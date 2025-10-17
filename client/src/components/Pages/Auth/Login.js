@@ -34,16 +34,10 @@ const Login = () => {
       const { role } = jwtDecode(token);
 
       // redirect based on role
-<<<<<<< HEAD
-      if (role === "Admin") {
-        navigate("/AdminDahsboard");
-      } else if (role === "user") {
-=======
       if (role === "admin") {
         navigate("/AdminDashboard");
         toast.success("Login successful!");
       } else if (role === "hr") {
->>>>>>> frontend
         navigate("/HRDashboard");
         toast.success("Login successful!");
       } else {

@@ -1,57 +1,59 @@
+/* Base Layout */
 .hr-dashboard {
   display: flex;
   flex-direction: column;
   height: 100vh;
   font-family: sans-serif;
+  padding: 1rem 2rem; /* Prevent full edge stretch */
 }
 
-.hr-dashboard-header {
+/* Header Area */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #003366;
   color: white;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  margin-bottom: 1.5rem;
 }
 
-.hr-dashboard-body {
-  display: flex;
-  flex: 1;
-}
-
-.hr-sidebar {
-  width: 180px;
-  background-color: #f5f7fa;
-  border-right: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
-  padding-top: 1rem;
-}
-
-.sidebar-btn {
+/* Floating Add Button (Round +) */
+.floating-add-btn,
+.btn-create {
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  background: none;
-  border: none;
-  padding: 0.8rem 1.2rem;
-  font-size: 15px;
+  justify-content: center;
   cursor: pointer;
-  color: #333;
-  transition: background 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
 }
 
-.sidebar-btn:hover,
-.sidebar-btn.active {
-  background-color: #e0e7ff;
-  color: #003366;
+.btn-create {
+  border-radius: 8px;       /* If you want rectangular for Cancel/Create */
+  width: auto;
+  padding: 0.6rem 1.2rem;
+  gap: 6px;
+  display: flex;
+  align-items: center;
 }
 
-.hr-main-content {
-  flex: 1;
-  padding: 2rem;
-  overflow-y: auto;
+/* Hover effect */
+.floating-add-btn:hover,
+.btn-create:hover {
+  background: #1d4ed8;
+  transform: scale(1.05);
 }
 
-
+/* Table Styling */
 .employee-table {
   width: 100%;
   border-collapse: collapse;
@@ -76,9 +78,18 @@
   background-color: #f9f9f9;
 }
 
+/* Form Wrapper (Prevents touching edges) */
+.form-wrapper {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+/* Error Text */
 .error {
   color: red;
   text-align: center;
 }
-
-

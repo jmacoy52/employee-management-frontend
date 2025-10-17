@@ -41,13 +41,8 @@ const userValidationSchema = {
     role: {
       optional: true, // Make it optional so users default to 'hr'
       isIn: {
-<<<<<<< HEAD
-        options: [['HR', 'Admin']], // Only allow 'user' or 'admin'
-        errorMessage: 'Invalid role. Must be either user or admin',
-=======
         options: [['hr', 'admin']], // Only allow 'hr' or 'admin'
         errorMessage: 'Invalid role. Must be either hr or admin',
->>>>>>> frontend
       }
     }
   };

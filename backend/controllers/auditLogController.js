@@ -1,4 +1,4 @@
-const AuditLogModel = require('../models/AuditLogModel');
+const AuditLogModel = require('../models/auditLogModel');
 
 class AuditLogController {
   //  Get all audit logs (admin only)
@@ -20,7 +20,7 @@ class AuditLogController {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    AuditLogModel.insertLog({ UserId, actions, descriptions }, (err, result) => {
+    AuditLogModel.insertLog(UserId, actions, descriptions, (err, result) => {
       if (err) {
         console.error('Error inserting audit log:', err);
         return res.status(500).json({ error: 'Failed to insert audit log' });

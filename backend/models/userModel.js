@@ -3,19 +3,10 @@ const db = require('../config/db');
 class UserModel {
   static registerUser(userData, callback) {
     const query = 'INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)';
-    const values = [userData.username, userData.email, userData.password, userData.role ||'HR'];
+    const values = [userData.username, userData.email, userData.password, userData.role || 'user'];
     db.query(query, values, callback);
   }
 
-<<<<<<< HEAD
-   // Delete employee by ID
-    static deleteUser(id, callback) {
-      const query = 'DELETE FROM users WHERE id = ?';
-      db.query(query, [id], callback);
-    }
-
-
-=======
    //Update User Role
   static updateUserRole(id, userData, callback) {
     const query = 'UPDATE users SET role = ? WHERE id = ?';
@@ -28,7 +19,6 @@ class UserModel {
     const query = 'DELETE FROM users WHERE id=?';
     db.query(query, [id], callback);
    }
->>>>>>> frontend
  // Inside the UserModel class
 static findUserByEmail(email) {
   return new Promise((resolve, reject) => {

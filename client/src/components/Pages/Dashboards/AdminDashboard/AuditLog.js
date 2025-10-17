@@ -36,21 +36,21 @@ const AuditLog = () => {
         <thead>
           <tr>
             <th>Log ID</th>
-            <th>Action</th>
-            <th>User ID</th>
+            <th>Actions</th>
             <th>Descriptions</th>
             <th>Timestamp</th>
+            <th>User ID</th>
           </tr>
         </thead>
         <tbody>
           {auditLogs.length > 0 ? (
             auditLogs.map((log) => (
-              <tr key={log.id}>
-                <td>{log.Id}</td>
+              <tr key={log.Id}>
+                <td>{log.LogId}</td>
                 <td>{log.actions}</td>
                 <td>{log.descriptions}</td>
                 <td>{new Date(log.created_at).toLocaleString()}</td>
-                <td>{log.UserId}</td>        
+                <td>{log.UserId}</td>
               </tr>
             ))
           ) : (

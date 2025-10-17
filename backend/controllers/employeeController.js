@@ -1,5 +1,5 @@
 const Employee = require('../models/employeeModel');
-const AuditLogModel = require('../models/AuditLogModel'); // Import the AuditLogModel
+const AuditLogModel = require('../models/auditLogModel'); // Import the auditLogModel
 
 class EmployeeController {
   // Get all employees

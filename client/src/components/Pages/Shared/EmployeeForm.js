@@ -1,12 +1,7 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from 'react';
-import '../Shared/Employee.css';
-=======
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../Shared/EmployeeForm.css";
 import toast from "react-hot-toast";
->>>>>>> frontend
 
 const EmployeeForm = ({ onSuccess }) => {
   const [formData, setFormData] = useState({

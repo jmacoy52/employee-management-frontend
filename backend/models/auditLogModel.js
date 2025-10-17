@@ -1,23 +1,28 @@
-const db = require('../config/db'); 
+const db = require('../config/db');
 
-const AuditLogModel = {
-    // Create a new audit log entry
-    create: (action, performed_by, details, callback) => {
-        const sql = 'INSERT INTO audit_log (action, performed_by, details) VALUES (?, ?, ?)';
-        db.query(sql, [action, performed_by, details], callback);
-    },
+class AuditLogModel {
+  // Get all logs (newest first)
+  static getAllLogs(callback) {
+    const query = 'SELECT * FROM audit_logs ORDER BY created_at DESC';
+    db.query(query, (err, results) => {
+      if (err) return callback(err);
+      callback(null, results);
+    });
+  }
 
-    // Get all audit log entries
-    getAll: (callback) => {
-        const sql = 'SELECT * FROM audit_log ORDER BY timestamp DESC';
-        db.query(sql, callback);
-    },
-
-    // Get audit log by ID
-    getById: (id, callback) => {
-        const sql = 'SELECT * FROM audit_log WHERE id = ?';
-        db.query(sql, [id], callback);
-    }
-};
+  // Insert a log
+  static insertLog(logData, callback) {
+    const query = `
+      INSERT INTO audit_logs (userId, actions, descriptions)
+      VALUES (?, ?, ?)
+    `;
+    const values = [
+      logData.userId,      // Who did the action
+      logData.action,      // e.g., LOGIN, CREATE_EMPLOYEE
+      logData.description  // Details
+    ];
+    db.query(query, values, callback);
+  }
+}
 
 module.exports = AuditLogModel;
