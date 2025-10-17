@@ -1,7 +1,11 @@
 // components/Pages/Employees/EmployeeStats.js
 import React from "react";
 import { Users, Building2, BadgeDollarSign } from "lucide-react";
+<<<<<<< HEAD
 import "./Employee.css";
+=======
+import "./EmployeeForm.css";
+>>>>>>> frontend
 
 const EmployeeStats = ({ employees }) => {
   const totalEmployees = employees.length;

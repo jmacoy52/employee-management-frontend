@@ -1,71 +1,72 @@
-# Employee Management System – Backend (Switch To Frontend branch to View Homepage of the WebApp)
+# Employee Management System
 
-This is the **backend API** for an Employee Management System. It provides secure and structured RESTful endpoints for managing users and employee data, with role-based access control.
+A full-stack web application for managing employees, built with Node.js, Express, React, and MySQL.
 
-The backend will be integrated with a frontend application later.
+## Features
 
----
+- User authentication and registration
+- Role-based access control (Admin, HR, Employee)
+- Employee management (CRUD operations)
+- User management (for admins)
+- Audit logging
+- Responsive user interface
 
-## 🚀 Key Features
+## Technology Stack
 
-- 🔐 JWT-based Authentication and Authorization
-- 👥 Role Management (Admin, Employee)
-- 📋 CRUD operations for Employee Records
-- ✅ Input Validation using `express-validator`
-- 🔒 Password Hashing using `bcryptjs`
-- 🔁 RESTful API Architecture
-- 🗂️ MVC Project Structure
-- 🔐 Protected Routes for Sensitive Operations
-- 🐘 MySQL Database Integration
+- **Backend:** Node.js, Express.js, JWT, bcryptjs, MySQL
+- **Frontend:** React, React Router, Axios, React Hot Toast
+- **Other:** CORS, dotenv
 
+## Installation
 
-## ⚙️ Technology Stack
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd Employee-Management-System
+   ```
 
-- **Node.js**
-- **Express.js**
-- **MySQL**
-- **JWT (JSON Web Token)**
-- **bcryptjs**
-- **dotenv**
-- **express-validator**
+2. Install backend dependencies:
+   ```bash
+   npm install
+   ```
 
----
+3. Install frontend dependencies:
+   ```bash
+   cd client
+   npm install
+   cd ..
+   ```
 
-##  How to Set Up Locally
+4. Configure environment variables:
+   - Create a `.env` file in the `backend` directory with your database credentials, JWT secret, and other necessary environment variables.
 
-### 1. Clone the Repository
+5. Set up the database:
+   - Run the SQL scripts located in `backend/sql/` to create the necessary tables.
 
-```bash
-git clone https://github.com/jmacoy52/Employee-Management-System.git
-cd employee-management-backend
-```
+## Running the Application
 
-### 2. Install Dependencies
+1. Start the backend server:
+   ```bash
+   npm start
+   ```
 
-```bash
-npm install
-```
+2. Start the frontend development server:
+   ```bash
+   cd client
+   npm start
+   ```
 
-### 3. Configure Environment Variables
+3. Open your browser and navigate to the application.
 
-Create a `.env` file in the root directory with the necessary environment variables for database connection, JWT secret, and port configuration. Refer to the code for the required variables.
+## Project Structure
 
-### 4. Set Up the Database
+- `backend/` - Node.js and Express backend code, including routes, controllers, models, and middleware.
+- `client/` - React frontend application.
+- `client/public/assets/homepageEmplocore.png` - Homepage image displayed on the landing page.
 
-Open MySQL and create the database manually:
+## Screenshot
 
-```sql
-CREATE DATABASE employee_db;
-```
-
-Run your migration script or use Sequelize/Knex if set up (if applicable).
-
-### 5. Start the Server
-
-```bash
-npm run dev
-```
-
+### Homepage
 The API will be running on your configured port.
 
 ---
@@ -75,3 +76,84 @@ The API will be running on your configured port.
 - This is a full-stack project with both backend and frontend components.
 - The frontend is built with React and is located in the `client` directory.
 - Ensure CORS is configured for frontend-backend communication.
+=======
+# Employee Management System
+
+A full-stack web application for managing employees, built with Node.js, Express, React, and MySQL.
+
+## Features
+
+- User authentication and registration
+- Role-based access control (Admin, HR, Employee)
+- Employee management (CRUD operations)
+- User management (for admins)
+- Audit logging
+- Responsive user interface
+
+## Technology Stack
+
+- **Backend:** Node.js, Express.js, JWT, bcryptjs, MySQL
+- **Frontend:** React, React Router, Axios, React Hot Toast
+- **Other:** CORS, dotenv
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd Employee-Management-System
+   ```
+
+2. Install backend dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Install frontend dependencies:
+   ```bash
+   cd client
+   npm install
+   cd ..
+   ```
+
+4. Configure environment variables:
+   - Create a `.env` file in the `backend` directory with your database credentials, JWT secret, and other necessary environment variables.
+
+5. Set up the database:
+   - Run the SQL scripts located in `backend/sql/` to create the necessary tables.
+
+## Running the Application
+
+1. Start the backend server:
+   ```bash
+   npm start
+   ```
+
+2. Start the frontend development server:
+   ```bash
+   cd client
+   npm start
+   ```
+
+3. Open your browser and navigate to the application.
+
+## Project Structure
+
+- `backend/` - Node.js and Express backend code, including routes, controllers, models, and middleware.
+- `client/` - React frontend application.
+- `client/public/assets/homepageEmplocore.png` - Homepage image displayed on the landing page.
+
+## Screenshot
+
+### Homepage
+
+![Homepage](client/public/assets/homepageEmplocore.png)
+
+## Contributing
+
+Contributions are welcome! Please open issues or submit pull requests for improvements.
+
+## License
+
+This project is licensed under the ISC License.
+>>>>>>> frontend

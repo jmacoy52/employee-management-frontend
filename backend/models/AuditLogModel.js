@@ -1,4 +1,4 @@
-const db = require('../config/db'); 
+const db = require('../config/db'); // adjust path as needed
 
 const AuditLogModel = {
     // Create a new audit log entry

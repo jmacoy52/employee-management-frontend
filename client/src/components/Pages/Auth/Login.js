@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast"; // Import toast for notifications
 import "./Login.css";
 
 const Login = () => {
@@ -24,6 +25,7 @@ const Login = () => {
         formData
       );
 
+
       // save JWT
       const token = res.data.token;
       localStorage.setItem("token", token);
@@ -32,10 +34,18 @@ const Login = () => {
       const { role } = jwtDecode(token);
 
       // redirect based on role
+<<<<<<< HEAD
       if (role === "Admin") {
         navigate("/AdminDahsboard");
       } else if (role === "user") {
+=======
+      if (role === "admin") {
+        navigate("/AdminDashboard");
+        toast.success("Login successful!");
+      } else if (role === "hr") {
+>>>>>>> frontend
         navigate("/HRDashboard");
+        toast.success("Login successful!");
       } else {
         navigate("/EmployeeDashboard");
       }

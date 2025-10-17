@@ -2,10 +2,14 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
 const db = require('../config/db');
+<<<<<<< HEAD
 const AuditLogModel = require('../models/AuditLogModel'); // Import the AuditLogModel
 
 // Load environment variables
 require('dotenv').config();
+=======
+const User = require('../models/userModel');
+>>>>>>> frontend
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
@@ -50,6 +54,7 @@ class UserController {
     }
   }
 
+<<<<<<< HEAD
   // Delete employee
   static deleteUser(req, res) {
     const userId = req.params.id;
@@ -74,6 +79,28 @@ class UserController {
       });
 
       res.status(200).json({ message: 'user deleted successfully' });
+=======
+        // UPDATE an existing user role
+  static updateUserRole(req, res) {
+    const userId = req.params.id;
+    const { role } = req.body;
+
+    if (!role) {
+      return res.status(400).json({ error: 'Role is required' });
+    }
+
+    UserModel.updateUserRole(userId, { role }, (err, result) => {
+      if (err) {
+        console.error('Error updating user role:', err);
+        return res.status(500).json({ error: 'Failed to update user role' });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      res.status(200).json({ message: 'User role updated successfully' });
+>>>>>>> frontend
     });
   }
 
@@ -113,7 +140,7 @@ class UserController {
   }
 0
   static async getAllUsers(req, res) {
-    db.query('SELECT id, username, email, role FROM users', (err, results) => {
+    db.query('SELECT id, username, email, role, created_at FROM users', (err, results) => {
       if (err) return res.status(500).json({ error: 'Server error' });
 
       //  Log this action
@@ -128,6 +155,26 @@ class UserController {
       res.json(results);
     });
   }
+
+    //Delete user
+    static deleteUser(req, res) {
+      const userId = req.params.id;
+
+      User.deleteUser(userId, (err, result) => {
+        if (err) {
+          console.error('Error deleting user:', err);
+          return res.status(500).json({ error: 'Failed to delete user' });
+        }
+    
+        if (result.affectedRows === 0) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+
+        else
+        res.status(200).json({ message: 'User deleted successfully' });
+
+      });
+    }
 }
 
 module.exports = UserController;
