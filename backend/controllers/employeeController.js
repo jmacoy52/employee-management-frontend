@@ -1,5 +1,5 @@
 const Employee = require('../models/employeeModel');
-const AuditLogModel = require('../models/auditLogModel'); // Import the auditLogModel
+const AuditLogModel = require('../models/auditLogModel');
 
 class EmployeeController {
   // Get all employees
@@ -12,7 +12,7 @@ class EmployeeController {
 
       // Log this action
       AuditLogModel.insertLog({
-        UserId: req.user.id,
+        userId: req.user.id,
         actions: 'VIEW_EMPLOYEES',
         descriptions: `User ${req.user.email} viewed all employees`
       }, (logErr) => {
@@ -40,7 +40,7 @@ class EmployeeController {
 
       // Log this action
       AuditLogModel.insertLog({
-        UserId: req.user.id,
+        userId: req.user.id,
         actions: 'CREATE_EMPLOYEE',
         descriptions: `Employee ${FullName} created by ${req.user.email}`
       }, (logErr) => {
@@ -74,7 +74,7 @@ class EmployeeController {
 
       // Log this action
       AuditLogModel.insertLog({
-        UserId: req.user.id,
+        userId: req.user.id,
         actions: 'UPDATE_EMPLOYEE',
         descriptions: `Employee ${employeeId} updated by ${req.user.email}`
       }, (logErr) => {
@@ -101,7 +101,7 @@ class EmployeeController {
 
       // Log this action
       AuditLogModel.insertLog({
-        UserId: req.user.id,
+        userId: req.user.id,
         actions: 'DELETE_EMPLOYEE',
         descriptions: `Employee ${employeeId} deleted by ${req.user.email}`
       }, (logErr) => {
@@ -128,7 +128,7 @@ class EmployeeController {
 
       // Log this action
       AuditLogModel.insertLog({
-        UserId: req.user.id,
+        userId: req.user.id,
         actions: 'VIEW_EMPLOYEE',
         descriptions: `User ${req.user.email} viewed employee ${employeeId}`
       }, (logErr) => {

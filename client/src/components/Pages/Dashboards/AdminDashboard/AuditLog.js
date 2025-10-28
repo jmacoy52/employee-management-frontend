@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./AuditLog.css";
+import AdminNav from "../../Shared/AdminNav";
+
 
 const AuditLog = () => {
   const [auditLogs, setAuditLogs] = useState([]);
@@ -30,6 +32,7 @@ const AuditLog = () => {
 
   return (
     <div className="audit-log-container">
+      <AdminNav />
       <h2>Audit Log</h2>
       {error && <p className="error">{error}</p>}
       <table className="audit-log-table">

@@ -1,11 +1,10 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const UserModel = require('../models/userModel');
+const UserProfileModel = require('../models/userProfileModel');
 const db = require('../config/db');
-const User = require('../models/userModel');
 
 const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN;
 
 class UserController {
   // Register new user
@@ -19,7 +18,6 @@ class UserController {
     try {
       // Check if user already exists
       const existingUser = await UserModel.findUserByEmail(email);
-      console.log('Checking for email:', email);
       if (existingUser) return res.status(409).json({ error: 'Email already exists' });
 
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -74,8 +72,16 @@ class UserController {
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (!passwordMatch) return res.status(401).json({ error: 'Invalid credentials' });
 
-      const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, {
-        expiresIn: JWT_EXPIRES_IN,
+      const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET);
+
+      // Log the login action
+      const AuditLogModel = require('../models/auditLogModel');
+      AuditLogModel.insertLog({
+        userId: user.id,
+        actions: 'LOGIN',
+        descriptions: `User ${user.username} logged in`
+      }, (err) => {
+        if (err) console.error('Failed to log login action:', err);
       });
 
       res.status(200).json({ message: 'Login successful', token });
@@ -93,25 +99,75 @@ class UserController {
     });
   }
 
-    //Delete user
-    static deleteUser(req, res) {
-      const userId = req.params.id;
+  // Delete user (Admin only)
+  static deleteUser(req, res) {
+    const userId = req.params.id;
 
-      User.deleteUser(userId, (err, result) => {
-        if (err) {
-          console.error('Error deleting user:', err);
-          return res.status(500).json({ error: 'Failed to delete user' });
-        }
-    
-        if (result.affectedRows === 0) {
-          return res.status(404).json({ error: 'User not found' });
-        }
+    UserModel.deleteUser(userId, (err, result) => {
+      if (err) {
+        console.error('Error deleting user:', err);
+        return res.status(500).json({ error: 'Failed to delete user' });
+      }
 
-        else
-        res.status(200).json({ message: 'User deleted successfully' });
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: 'User not found' });
+      }
 
+      // Log the delete user action
+      const AuditLogModel = require('../models/auditLogModel');
+      AuditLogModel.insertLog({
+        userId: req.user.id,
+        actions: 'DELETE_USER',
+        descriptions: `User ${userId} deleted by ${req.user.email}`
+      }, (logErr) => {
+        if (logErr) console.error('Failed to log delete user action:', logErr);
       });
-    }
+
+      res.status(200).json({ message: 'User deleted successfully' });
+    });
+  }
+
+  // Get user profile
+  static getProfile(req, res) {
+    const userId = req.user.id; // From JWT middleware
+
+    const query = `
+      SELECT u.username, u.email, u.role, up.first_name, up.last_name, up.phone, up.address
+      FROM users u
+      LEFT JOIN user_profiles up ON u.id = up.user_id
+      WHERE u.id = ?
+    `;
+
+    db.query(query, [userId], (err, results) => {
+      if (err) {
+        console.error('Error fetching profile:', err);
+        return res.status(500).json({ error: 'Failed to fetch profile' });
+      }
+
+      if (results.length === 0) {
+        return res.status(404).json({ error: 'Profile not found' });
+      }
+
+      res.status(200).json(results[0]);
+    });
+  }
+
+  // Update user profile
+  static updateProfile(req, res) {
+    const userId = req.user.id; // From JWT middleware
+    const { first_name, last_name, phone, address } = req.body;
+
+    const profileData = { first_name, last_name, phone, address };
+
+    UserProfileModel.upsertProfile(userId, profileData, (err, result) => {
+      if (err) {
+        console.error('Error updating profile:', err);
+        return res.status(500).json({ error: 'Failed to update profile' });
+      }
+
+      res.status(200).json({ message: 'Profile updated successfully' });
+    });
+  }
 }
 
 module.exports = UserController;

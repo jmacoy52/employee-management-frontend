@@ -68,3 +68,22 @@ body {
   font-size: 0.875rem;
   margin-top: -0.5rem;
 }
+
+.auth-links {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.auth-links a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+}
+
+.auth-links a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}

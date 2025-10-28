@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./UserManagement.css";
 import { toast } from "react-hot-toast";
+import AdminNav from "../../Shared/AdminNav";
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -52,6 +53,7 @@ const UserManagement = () => {
 
   return (
     <div className="user-management-container">
+      <AdminNav />
       <h2>User Management</h2>
       <table className="user-management-table">
         <thead>

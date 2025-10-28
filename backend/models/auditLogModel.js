@@ -10,6 +10,21 @@ class AuditLogModel {
     });
   }
 
+  // Get recent activities (last 10, newest first)
+  static getRecentActivities(callback) {
+    const query = `
+      SELECT al.id, al.actions, al.descriptions, al.created_at, u.username
+      FROM audit_logs al
+      JOIN users u ON al.userId = u.id
+      ORDER BY al.created_at DESC
+      LIMIT 10
+    `;
+    db.query(query, (err, results) => {
+      if (err) return callback(err);
+      callback(null, results);
+    });
+  }
+
   // Insert a log
   static insertLog(logData, callback) {
     const query = `
@@ -18,8 +33,8 @@ class AuditLogModel {
     `;
     const values = [
       logData.userId,      // Who did the action
-      logData.action,      // e.g., LOGIN, CREATE_EMPLOYEE
-      logData.description  // Details
+      logData.actions,     // e.g., LOGIN, CREATE_EMPLOYEE
+      logData.descriptions // Details
     ];
     db.query(query, values, callback);
   }

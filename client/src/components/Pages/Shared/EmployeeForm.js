@@ -37,12 +37,10 @@ const EmployeeForm = ({ onSuccess }) => {
         await axios.post("http://localhost:5000/api/employees", payload, {
           headers: { Authorization: `Bearer ${token}` },
         })
-      toast.success("Employee created successfully!");
-
       onSuccess();
     } catch (err) {
       const msg = err.response?.data?.errors?.[0]?.msg;
-      setError(msg || "Failed to save employee.");
+      setError(msg || "Failed to Create employee.");
     }
   };
 

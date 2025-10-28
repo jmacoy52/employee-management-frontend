@@ -12,15 +12,26 @@ class AuditLogController {
     });
   }
 
-  // Insert a log (system-internal use only, not exposed as a public route)
-  static insertAuditLog(req, res) {
-    const { UserId, actions, descriptions } = req.body;
+  // Get recent activities for HR (last 10 activities)
+  static getRecentActivities(req, res) {
+    AuditLogModel.getRecentActivities((err, activities) => {
+      if (err) {
+        console.error('Error fetching recent activities:', err);
+        return res.status(500).json({ error: 'Failed to fetch recent activities' });
+      }
+      res.status(200).json(activities);
+    });
+  }
 
-    if (!UserId || !actions || !descriptions) {
+  // Insert a log (Admin only, for testing)
+  static insertAuditLog(req, res) {
+    const { userId, actions, descriptions } = req.body;
+
+    if (!userId || !actions || !descriptions) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    AuditLogModel.insertLog(UserId, actions, descriptions, (err, result) => {
+    AuditLogModel.insertLog({ userId, actions, descriptions }, (err, result) => {
       if (err) {
         console.error('Error inserting audit log:', err);
         return res.status(500).json({ error: 'Failed to insert audit log' });

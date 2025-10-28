@@ -30,14 +30,13 @@ class EmployeeModel {
   static updateEmployee(id, employeeData, callback) {
     const query = `
       UPDATE employees
-      SET FullName = ?, position = ?, Department = ?, email = ?, salary = ?
+      SET FullName = ?, position = ?, Department = ?, salary = ?
       WHERE id = ?
     `;
     const values = [
       employeeData.FullName,
       employeeData.position,
       employeeData.Department,
-      employeeData.email || null,
       employeeData.salary,
       id
     ];

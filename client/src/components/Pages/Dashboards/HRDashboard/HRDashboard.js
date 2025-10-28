@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import EmployeeForm from "../../Shared/EmployeeForm";
-import EmployeeList from "../../Shared/EmployeeList";
 import EmployeeStats from "../../Shared/EmployeeStats";
-import EditEmployeeModal from "../../Shared/EditEmployeeModal";
-import { PlusCircle } from "lucide-react";
+import HRNav from "../../Shared/HRNav";
+import { useNavigate } from "react-router-dom";
+import { Plus, Users, Building } from "lucide-react";
 import "./HRDashboard.css";
-import "../../Shared/EmployeeForm.css"; 
 import toast from "react-hot-toast";
 
 const HRDashboard = () => {
   const [employees, setEmployees] = useState([]);
   const [error, setError] = useState("");
-  const [showCreateForm, setShowCreateForm] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
-  const [editingEmployee, setEditingEmployee] = useState(null);
+  const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
 
@@ -34,64 +30,48 @@ const HRDashboard = () => {
     fetchEmployees();
   }, []);
 
-  const handleEmployeeCreated = () => {
-    fetchEmployees();
-    setShowCreateForm(false);
-  };
-
-  const handleEdit = (employee) => {
-    setEditingEmployee(employee);
-    setEditOpen(true);
-  };
-
-  const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this employee?")) return;
-    try {
-      await axios.delete(`http://localhost:5000/api/employees/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      toast.success("Employee deleted successfully!");
-      fetchEmployees();
-    } catch (err) {
-      console.error("Failed to delete employee:", err);
-      toast.error("Delete failed.");
-    }
-  };
+  const today = new Date().toLocaleDateString();
 
   return (
     <div className="hr-dashboard">
-      <div className="header">
-        <h2>Welcome, HR</h2>
+      <HRNav />
+      <div className="dashboard-content">
+        <div className="welcome-header">
+          <h2>Welcome, HR</h2>
+          <span className="date">{today}</span>
+        </div>
+
+        <div className="quick-actions">
+          <button className="btn-primary" onClick={() => navigate("/hr/create-employee")}>
+            <Plus size={18} /> Add Employee
+          </button>
+          <button className="btn-outline" onClick={() => navigate("/hr/employees")}>
+            <Users size={18} /> View Employees
+          </button>
+        </div>
+
+        {error && <p className="error">{error}</p>}
+
+        <EmployeeStats employees={employees} />
+
+        <div className="recent-activity">
+          <h3>Quick Stats</h3>
+          <div className="stats-grid">
+            <div className="stat-card">
+              <h4>Total Employees</h4>
+              <p>{employees.length}</p>
+            </div>
+            <div className="stat-card">
+              <h4>Active Employees</h4>
+              <p>{employees.length}</p>
+            </div>
+            <div className="stat-card">
+              <h4>Departments</h4>
+              <p>{new Set(employees.map(emp => emp.Department)).size}</p>
+            </div>
+          </div>
+        </div>
       </div>
-
-      {/* Floating Button */}
-      <button className="floating-add-btn" onClick={() => setShowCreateForm((p) => !p)}>
-  <PlusCircle size={20} />
-</button>
-
-      {error && <p className="error">{error}</p>}
-
-      {showCreateForm && (
-  <div className="form-wrapper">
-    <EmployeeForm onSuccess={handleEmployeeCreated} />
-  </div>
-      )}
-
-      <EmployeeList
-        employees={employees}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
-
-      <EmployeeStats employees={employees} />
-
-      <EditEmployeeModal
-        open={editOpen}
-        onClose={() => setEditOpen(false)}
-        employee={editingEmployee}
-        onUpdated={fetchEmployees}
-      />
     </div>
   );
 };

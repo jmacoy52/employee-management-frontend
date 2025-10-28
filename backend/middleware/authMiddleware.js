@@ -14,11 +14,17 @@ function authenticateToken(req, res, next) {
 }
 
 function authorizeAdmin(req, res, next) {
- if (!['admin', 'HR'].includes(req.user.role)) {
-  return res.status(403).json({ error: 'Access denied.' });
-}
-
+  if (req.user.role !== 'admin') {
+    return res.status(403).json({ error: 'Access denied. Admin role required.' });
+  }
   next();
 }
 
-module.exports = { authenticateToken, authorizeAdmin };
+function authorizeHR(req, res, next) {
+  if (req.user.role !== 'HR') {
+    return res.status(403).json({ error: 'Access denied.' });
+  }
+  next();
+}
+
+module.exports = { authenticateToken, authorizeAdmin, authorizeHR };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./UserList.css";
+import AdminNav from "../../Shared/AdminNav";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -25,6 +26,7 @@ const UserList = () => {
 
   return (
     <div className="user-list-container">
+      <AdminNav />
       <h2>All Users</h2>
       {error && <p className="error">{error}</p>}
       <table className="user-table">

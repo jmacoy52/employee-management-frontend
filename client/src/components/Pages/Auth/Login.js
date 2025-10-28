@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast"; // Import toast for notifications
+import { useNavigate, Link } from "react-router-dom";
+import { toast } from "react-hot-toast"; // toast for notifications
 import "./Login.css";
 
 const Login = () => {
@@ -10,11 +10,11 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
 
-  // ------------- handle field change -------------
+  // handle field change
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // ------------- handle form submit -------------
+  // handle form submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -30,14 +30,16 @@ const Login = () => {
       const token = res.data.token;
       localStorage.setItem("token", token);
 
-      // decode role from token
-      const { role } = jwtDecode(token);
+      // decode token to get user info
+      const decoded = jwtDecode(token);
+      const user = { id: decoded.id, email: decoded.email, role: decoded.role };
+      localStorage.setItem("user", JSON.stringify(user));
 
       // redirect based on role
-      if (role === "admin") {
+      if (user.role === "admin") {
         navigate("/AdminDashboard");
         toast.success("Login successful!");
-      } else if (role === "hr") {
+      } else if (user.role === "hr") {
         navigate("/HRDashboard");
         toast.success("Login successful!");
       } else {
@@ -47,11 +49,10 @@ const Login = () => {
       setError(
         err.response?.data?.error || "Login failed. Please try again."
       );
-      console.error(err.response?.data);
     }
   };
 
-  // ------------- UI -------------
+  //  UI
   return (
     <div className="auth-container">
       <h2>Login</h2>
@@ -77,6 +78,11 @@ const Login = () => {
           Login
         </button>
       </form>
+      <div className="auth-links">
+        <Link to="/register">Don't have an account? 
+        Register</Link>
+        <Link to="/">Back to Home</Link>
+      </div>
     </div>
   );
 };

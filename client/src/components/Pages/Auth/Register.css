@@ -71,3 +71,22 @@ form input:focus {
   font-size: 0.95rem;
   text-align: center;
 }
+
+.auth-links {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.auth-links a {
+  color: #0077cc;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color 0.3s ease;
+}
+
+.auth-links a:hover {
+  color: #005fa3;
+  text-decoration: underline;
+}
