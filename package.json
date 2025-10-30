@@ -1,7 +1,7 @@
 {
   "name": "employee-management-system",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node backend/server.js",
     "dev": "nodemon backend/server.js"
@@ -9,7 +9,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Backend for Employee Management System",
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
