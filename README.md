@@ -5,7 +5,7 @@ A full-stack web application for managing employees, built with Node.js, Express
 ## Features
 
 - User authentication and registration
-- Role-based access control (Admin, HR, Employee)
+- Role-based access control (Admin, HR, Employee;later)
 - Employee management (CRUD operations)
 - User management (for admins)
 - Audit logging
